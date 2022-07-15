@@ -1,0 +1,35 @@
+{
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview --port 4173",
+    "build": "vite build && npm run build-css",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "css": "npx tailwindcss -i ./src/assets/scss/build.scss -o ./src/assets/scss/tailwinds.scss --watch",
+    "build-css": "npx tailwindcss -i ./src/assets/scss/build.scss -o ./src/assets/scss/tailwinds.css --minify"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/vue-fontawesome": "^3.0.1",
+    "bootstrap-icons": "^1.8.3",
+    "chart.js": "^3.8.0",
+    "fontawesome": "^5.6.3",
+    "fortawesome": "^0.0.1-security",
+    "tailwindcss-filters": "^3.0.0",
+    "vue": "^3.2.37",
+    "vue-router": "^4.0.16"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.1.0",
+    "@vitejs/plugin-vue": "^2.3.3",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "eslint": "^8.5.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "prettier": "^2.5.1",
+    "sass": "^1.53.0",
+    "tailwindcss": "^3.1.4",
+    "vite": "^2.9.12"
+  }
+}
