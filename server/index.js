@@ -8,18 +8,19 @@ const Sock = new rlp({
   port: 5000,
 });
 
+app.use(require("./module/index"));
 app.use(bodyParser.json());
 app.use(cors());
 
-Sock.on("connection", (connection) => {
-  connection.on("fetch_users", (data) => {
-    console.log(
-      JSON.parse(data).Data.map((user) => {
-        return JSON.parse(user);
-      })
-    );
-  });
-});
+// Sock.on("connection", (connection) => {
+//   connection.on("fetch_users", (data) => {
+//     console.log(
+//       JSON.parse(data).Data.map((user) => {
+//         return JSON.parse(user);
+//       })
+//     );
+//   });
+// });
 
 app.use("*", (req, res, next) => {
   res.json({
