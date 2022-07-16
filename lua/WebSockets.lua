@@ -2,10 +2,11 @@ local Config = {
     ["ServerURL"] = "https://WebSockets.jareer12.repl.co" -- Your Server URL
 }
 
+local Sockets = require(script.Parent.Module)
+
 local Players = game:GetService("Players")
 local HTTPServer = game:GetService("HttpService")
-local robloxLongPolling = require(script.Parent.Module)
-local connection = robloxLongPolling.Connect(Config.ServerURL, "")
+local connection = Sockets.Connect(Config.ServerURL, "")
 
 while true do
     local Users = {}
@@ -31,6 +32,8 @@ while true do
         }
     )
 
+    print("Sending")
     connection:send("fetch_users", Data)
-    wait(5)
+    print(Data)
+    wait(2)
 end

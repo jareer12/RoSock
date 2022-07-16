@@ -3,8 +3,8 @@ const events = require("events");
 class Connection {
   constructor(id, removeInstance) {
     this.stream = new events.EventEmitter();
-    this.id = id;
     this.lastPing = new Date();
+    this.id = id;
 
     this.readyToReceive = false;
     this.sending = false;
@@ -19,7 +19,7 @@ class Connection {
       } else {
         this.send("internal_ping");
       }
-    }, 1000 * 2.5);
+    }, 1000 * 1);
   }
 
   on(event, handler) {
@@ -65,6 +65,7 @@ class Connection {
     if (req.body.name !== undefined && req.body.data !== undefined) {
       const name = Buffer.from(req.body.name, "base64").toString();
       const data = Buffer.from(req.body.data, "base64").toString();
+      console.log(name);
       this.stream.emit(name, data);
 
       res.json({

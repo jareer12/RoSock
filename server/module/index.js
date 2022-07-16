@@ -1,88 +1,100 @@
+const connection = require("./connection");
 const express = require("express");
-const pollServer = express();
-const uuid = require("uuid").v4;
 const events = require("events");
 const helmet = require("helmet");
+const uuid = require("uuid").v4;
 
-const connection = require("./models/connection");
+class RobloxWebSocket {
+  constructor() {
+    const app = express();
 
-this.connections = {};
+    this.connections = {}; // {socketId: connection}
+    this.stream = new events.EventEmitter();
 
-this.port = settings.port || 2004;
-this.password = settings.password || "";
-this.stream = new events.EventEmitter();
-pollServer.use(express.json());
-pollServer.use(helmet());
+    app.use(express.json());
+    app.use(helmet());
 
-pollServer.post("/connection", async (req, res) => {
-  if (this.password !== "") {
-    if (req.body.password && req.body.password == this.password) {
+    app.post("/connection", async (req, res) => {
       const id = uuid();
+      console.log(`Connection attempt with id ${id}`);
+
       this.connections[id] = new connection(id, () => {
         delete connections[id];
       });
+
       this.stream.emit("connection", this.connections[id]);
+      console.log(this.connections);
       res.json({
         success: true,
         socketId: id,
       });
-    } else {
-      res.status(401).json({
-        success: false,
-        reason: "Unauthorized",
-      });
+    });
+
+    app.get("/poll/:id", async (req, res) => {
+      const id = req.params.id;
+      //   console.log(`Poll attempt with id ${id}`);
+      if (this.connections[id] !== undefined) {
+        this.connections[id]._get(req, res);
+      } else {
+        res.status(400).json({
+          success: false,
+          reason: "Not a valid connection",
+        });
+      }
+    });
+
+    app.post("/poll/:id", async (req, res) => {
+      const id = req.params.id;
+      //   console.log(`Poll attempt with id ${id}`);
+      if (this.connections[id] !== undefined) {
+        this.connections[id]._post(req, res);
+      } else {
+        res.status(400).json({
+          success: false,
+          reason: "Not a valid connection",
+        });
+      }
+    });
+
+    app.delete("/connection/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(`Disconnect attempt with id ${id}`);
+      if (this.connections[id] !== undefined) {
+        this.connections[id]._disconnect();
+      } else {
+        res.status(400).json({
+          success: false,
+          reason: "Not a valid connection",
+        });
+      }
+    });
+
+    app.listen(7000, function (err) {
+      console.log("Listening on port 7000");
+    });
+  }
+
+  on(event, handler) {
+    return this.stream.on(event, handler);
+  }
+
+  broadcast(name, message) {
+    for (const id of Object.keys(this.connections)) {
+      this.connections[id].send(name, message);
     }
-  } else {
-    const id = uuid();
-    this.connections[id] = new connection(id, () => {
-      delete connections[id];
-    });
-    this.stream.emit("connection", this.connections[id]);
-    res.json({
-      success: true,
-      socketId: id,
-    });
   }
+}
+
+const Sock = new RobloxWebSocket();
+Sock.on("connection", (connection) => {
+  console.log(`Connection ${connection.id} connected`);
+  connection.on("fetch_users", (data) => {
+    console.log(
+      JSON.parse(data).Data.map((user) => {
+        return JSON.parse(user);
+      })
+    );
+  });
 });
 
-pollServer.get("/poll/:id", async (req, res) => {
-  const id = req.params.id;
-  if (this.connections[id] !== undefined) {
-    this.connections[id]._get(req, res);
-  } else {
-    res.status(400).json({
-      success: false,
-      reason: "Not a valid connection",
-    });
-  }
-});
-pollServer.post("/poll/:id", async (req, res) => {
-  const id = req.params.id;
-  if (this.connections[id] !== undefined) {
-    this.connections[id]._post(req, res);
-  } else {
-    res.status(400).json({
-      success: false,
-      reason: "Not a valid connection",
-    });
-  }
-});
-
-pollServer.delete("/connection/:id", async (req, res) => {
-  const id = req.params.id;
-  if (this.connections[id] !== undefined) {
-    this.connections[id]._disconnect();
-  } else {
-    res.status(400).json({
-      success: false,
-      reason: "Not a valid connection",
-    });
-  }
-});
-
-pollServer.listen(this.port);
-module.exports = function main(req, res, next) {
-  if (req.method.toLowerCase() === "delete") {
-  } else {
-  }
-};
+module.exports = Sock;
