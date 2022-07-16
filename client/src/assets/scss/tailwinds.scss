@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.1.4 | MIT License | https://tailwindcss.com
+! tailwindcss v3.1.6 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -769,11 +769,6 @@ video {
   border-color: rgb(220 230 241 / var(--tw-border-opacity));
 }
 
-.border-orange-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(249 115 22 / var(--tw-border-opacity));
-}
-
 .border-steel-200 {
   --tw-border-opacity: 1;
   border-color: rgb(57 54 72 / var(--tw-border-opacity));
@@ -837,11 +832,6 @@ video {
 .bg-winkle-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(210 222 236 / var(--tw-bg-opacity));
-}
-
-.bg-orange-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 115 22 / var(--tw-bg-opacity));
 }
 
 .bg-steel-300 {
@@ -942,6 +932,14 @@ video {
   --tw-gradient-to: #DB44D9;
 }
 
+.to-emerald-300 {
+  --tw-gradient-to: #53DB66;
+}
+
+.to-emerald-400 {
+  --tw-gradient-to: #47D95A;
+}
+
 .to-flush-400 {
   --tw-gradient-to: #D45151;
 }
@@ -984,14 +982,6 @@ video {
 
 .to-steel-400 {
   --tw-gradient-to: #2B2937;
-}
-
-.to-emerald-300 {
-  --tw-gradient-to: #53DB66;
-}
-
-.to-emerald-400 {
-  --tw-gradient-to: #47D95A;
 }
 
 .bg-size-200 {

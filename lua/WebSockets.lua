@@ -2,7 +2,7 @@ local Config = {
     ["ServerURL"] = "https://WebSockets.jareer12.repl.co" -- Your Server URL
 }
 
-local Sockets = require(script.Parent.Module)
+local Sockets = require(script.Parent.Main)
 
 local Players = game:GetService("Players")
 local HTTPServer = game:GetService("HttpService")

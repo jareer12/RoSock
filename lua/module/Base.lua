@@ -1,4 +1,3 @@
---Credit to Reselim https://gist.github.com/Reselim/40d62b17d138cc74335a1b0709e19ce2
 local FILLER_CHARACTER = 61
 
 local alphabet = {}
@@ -6,16 +5,16 @@ local indexes = {}
 
 for index = 65, 90 do
     table.insert(alphabet, index)
-end -- A-Z
+end
 for index = 97, 122 do
     table.insert(alphabet, index)
-end -- a-z
+end
 for index = 48, 57 do
     table.insert(alphabet, index)
-end -- 0-9
+end
 
-table.insert(alphabet, 43) -- +
-table.insert(alphabet, 47) -- /
+table.insert(alphabet, 43)
+table.insert(alphabet, 47)
 
 for index, character in pairs(alphabet) do
     indexes[character] = index

@@ -1,5 +1,5 @@
 local HttpService = game:GetService("HttpService")
-local Base64 = require(script.Base)
+local Base64 = require(script.Parent.Base)
 
 Connection = {}
 Connection.__index = Connection
@@ -65,7 +65,6 @@ function Connection.new(url, id)
         )
     end
 
-    -- game:BindToClose(close) -- Reasons
     game.Close:Connect(close)
 
     return newConnection

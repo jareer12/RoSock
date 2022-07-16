@@ -1,5 +1,5 @@
 local HttpService = game:GetService("HttpService")
-local connection = require(script.Connection)
+local connection = require(script.Parent.Connection)
 
 local robloxLongPolling = {}
 

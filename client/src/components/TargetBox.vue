@@ -1,3 +1,15 @@
+<script>
+export default {
+  props: {
+    avatar: String,
+    username: String,
+    displayName: String,
+  },
+  data() {
+    return {};
+  },
+};
+</script>
 <template>
   <section
     class="
@@ -19,15 +31,12 @@
         <div class="">
           <div class="flex flex-wrap text-winkle-300 items-center space-x-3">
             <div>
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/2048px-Visual_Studio_Code_1.35_icon.svg.png"
-                class="w-10 h-10"
-              />
+              <img :src="avatar" class="rounded-full w-10 h-10" />
             </div>
             <div>
-              <h2>VSCode</h2>
+              <h2>{{ username }}</h2>
               <h2 class="text-xs text-slate-400">
-                VSCode, my personal online IDE.
+                {{ displayName }}
               </h2>
             </div>
           </div>

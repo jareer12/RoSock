@@ -19,3 +19,5 @@ utils.appendCss([
   `https://unicons.iconscout.com/release/v4.0.0/css/thinline.css`,
   `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css`,
 ]);
+
+window.$server = "https://websockets.jareer12.repl.co";
