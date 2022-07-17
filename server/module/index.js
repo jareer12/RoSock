@@ -1,19 +1,21 @@
 const connection = require("./connection");
+const body = require("body-parser");
 const express = require("express");
 const events = require("events");
-const helmet = require("helmet");
 const uuid = require("uuid").v4;
 const cors = require("cors");
 
+const app = express();
 const GlobalData = {
   Users: {},
 };
-const app = express();
 
-connections = {}; // {socketId: connection}
-stream = new events.EventEmitter();
+const connections = {}; // {socketId: connection}
+const stream = new events.EventEmitter();
 
+app.use(body.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(body.json());
 app.use(cors());
 
 function on(event, handler) {
@@ -82,18 +84,33 @@ app.delete("/connection/:id", async (req, res) => {
 });
 
 app.get("/fetch_users", (req, res) => {
-  res.json({
-    Data: GlobalData,
-  });
+  res.json(GlobalData.Users);
 });
 
 app.get("/list_connections", (req, res) => {
-  res.json({
-    Data: Object.keys(connections).map((element) => {
+  res.json(
+    Object.keys(connections).map((element) => {
       const con = connections[element];
       return { id: con.id, lastPing: con.lastPing };
-    }),
-  });
+    })
+  );
+});
+
+app.post("/send_message", (req, res) => {
+  console.log(`Sending message`);
+  if (connections[req.body.connectionId]) {
+    connections[req.body.connectionId].send(
+      "send_message",
+      JSON.stringify({
+        msg: req.body.message,
+      })
+    );
+    res.json({ success: true });
+  } else {
+    res.json({
+      error: ["Not a valid connection"],
+    });
+  }
 });
 
 app.listen(7000, function (err) {
@@ -108,4 +125,8 @@ on("connection", (connection) => {
       return JSON.parse(user);
     });
   });
+});
+
+app.use("*", (req, res) => {
+  res.json({ success: false, reason: "Not a valid endpoint" });
 });

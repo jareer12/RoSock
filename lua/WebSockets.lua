@@ -34,6 +34,13 @@ while true do
 
     print("Sending")
     connection:send("fetch_users", Data)
+    connection:on(
+        "send_message",
+        function(data)
+            print("Received")
+            print(data)
+        end
+    )
     print(Data)
     wait(2)
 end

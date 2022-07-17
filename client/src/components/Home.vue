@@ -4,14 +4,14 @@ export default {
   components: { Target },
   data() {
     return {
-      Users: [],
+      Users: [{ Name: "ROBLOX", DisplayName: "ROBLOX", UserId: 1 }],
     };
   },
   mounted() {
     fetch(`${window.$server}/fetch_users`)
       .then((response) => response.json())
       .then((data) => {
-        this.Users = data.Data;
+        this.Users = data;
       });
   },
 };
