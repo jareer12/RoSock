@@ -8,6 +8,7 @@ const cors = require("cors");
 const app = express();
 const GlobalData = {
   Users: {},
+  PlaceInfo: {},
 };
 
 const connections = {}; // {socketId: connection}
@@ -83,8 +84,16 @@ app.delete("/connection/:id", async (req, res) => {
   }
 });
 
-app.get("/fetch_users", (req, res) => {
-  res.json(GlobalData.Users);
+app.get("/fetch_users/:conectionId", (req, res) => {
+  res.json(GlobalData["Users"][req.params.conectionId]);
+});
+
+app.get("/place_info/:conectionId", (req, res) => {
+  let data = GlobalData["PlaceInfo"][req.params.conectionId];
+  res.json({
+    PlaceId: data.PlaceId,
+    Avatar: `https://assetgame.roblox.com/Game/Tools/ThumbnailAsset.ashx?aid=${data.PlaceId}&fmt=png&wd=420&ht=420`,
+  });
 });
 
 app.get("/list_connections", (req, res) => {
@@ -124,6 +133,9 @@ on("connection", (connection) => {
     GlobalData["Users"][connection.id] = JSON.parse(data).Data.map((user) => {
       return JSON.parse(user);
     });
+  });
+  connection.on("initialize", (data) => {
+    GlobalData["PlaceInfo"][connection.id] = JSON.parse(data);
   });
 });
 

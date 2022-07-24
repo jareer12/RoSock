@@ -21,7 +21,6 @@ let color = utils.hexToRgb(`${themeColor}`, 0.1);
 let greenborder = utils.hexToRgb(`${Colors["steel"]}`, 1);
 let border = utils.hexToRgb(`${themeColor}`, 1);
 
-console.log(utils.hexToRgb(themeColor, 0.1));
 export default {
   components: { IPLog, Stats, NewChart },
   data() {

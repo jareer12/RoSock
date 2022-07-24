@@ -30,7 +30,7 @@ export default {
       <div>
         <div class="">
           <div class="flex flex-wrap text-winkle-300 items-center space-x-3">
-            <div>
+            <div v-if="avatar">
               <img :src="avatar" class="rounded-full w-10 h-10" />
             </div>
             <div>

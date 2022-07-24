@@ -37,7 +37,6 @@ export default {
       type: this.type,
       options: Options,
     });
-    console.log(chart);
   },
 };
 </script>

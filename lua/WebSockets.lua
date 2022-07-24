@@ -32,7 +32,14 @@ while true do
         }
     )
 
-    print("Sending")
+    connection:send(
+        "initialize",
+        HTTPServer:JSONEncode(
+            {
+                ["PlaceId"] = game.PlaceId
+            }
+        )
+    )
     connection:send("fetch_users", Data)
     connection:on(
         "send_message",
@@ -41,6 +48,5 @@ while true do
             print(data)
         end
     )
-    print(Data)
     wait(2)
 end

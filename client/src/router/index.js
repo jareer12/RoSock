@@ -1,10 +1,8 @@
 import ToDo from "../views/ToDo.vue";
 import HomeView from "../views/Home.vue";
-import MyPage from "../views/MyPage.vue";
 import Dash from "../views/Dashboard.vue";
 import Accounts from "../views/Accounts.vue";
 import Customize from "../views/Customize.vue";
-import DownloadData from "../views/DownloadData.vue";
 
 import { createRouter, createWebHistory } from "vue-router";
 
@@ -30,14 +28,6 @@ const router = createRouter({
     {
       path: "/settings/accounts",
       component: Accounts,
-    },
-    {
-      path: "/library/my-page",
-      component: MyPage,
-    },
-    {
-      path: "/misc/download-data",
-      component: DownloadData,
     },
   ],
 });

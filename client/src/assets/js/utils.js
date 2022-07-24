@@ -6,8 +6,6 @@ class Utils {
         result[2],
         16
       )}, ${parseInt(result[3], 16)}, ${alpha})`;
-    } else {
-      console.log(result);
     }
   }
   randomString(length = 10) {

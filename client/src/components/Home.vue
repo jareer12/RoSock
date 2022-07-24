@@ -4,14 +4,14 @@ export default {
   components: { Target },
   data() {
     return {
-      Users: [{ Name: "ROBLOX", DisplayName: "ROBLOX", UserId: 1 }],
+      connections: [],
     };
   },
   mounted() {
-    fetch(`${window.$server}/fetch_users`)
+    fetch(`${window.$server}/list_connections`)
       .then((response) => response.json())
       .then((data) => {
-        this.Users = data;
+        this.connections = data;
       });
   },
 };
@@ -20,16 +20,15 @@ export default {
 <template>
   <main class="">
     <section class="mt-5">
-      <h2>Online Users</h2>
+      <h2>Con-current connections</h2>
       <div
         class="grid xl:grid-cols-3 mt-3 lg:grid-cols-2 grid-cols-1 gap-5 w-full"
       >
         <Target
-          v-for="user in Users"
-          :key="user"
-          :avatar="`https://www.roblox.com/headshot-thumbnail/image?userId=${user.UserId}&width=60&height=60&format=png`"
-          :username="user.Name"
-          :displayName="user.DisplayName"
+          v-for="connection in connections"
+          :key="connection"
+          :username="connection.id"
+          :displayName="connection.lastPing"
         />
       </div>
     </section>
